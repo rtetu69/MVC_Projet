@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\controller\ArticleControllers;
+
 class Router
 {
     public function run()
@@ -12,11 +14,11 @@ class Router
         if(isset($_GET['action'])){
             switch ($action):
             case 'article':
-                require_once 'vue/articleView.php';
+                return (new ArticleControllers())->readArticle(1);
             endswitch;
 
         }else{
-            require_once 'vue/connexion.php';
+            require_once 'vue/accueil.php';
         }
     }
 }

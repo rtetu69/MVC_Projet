@@ -9,7 +9,7 @@
 <body class="w3-content w3-sand" style="max-width:100%">
 
     <div class="w3-container w3-margin">
-        <form class="w3-container w3-card-4 w3-light-grey">
+        <form class="w3-container w3-card-4 w3-light-grey" method="post">
             <h2 class="w3-center">Ajouter un article</h2>
             <p class="w3-center" style="font-style: italic; color:grey;">Renseigner les différents champs pour pouvoir ajouter un article.</p>
 
@@ -21,7 +21,7 @@
                 <input class="w3-input w3-border" name="prixArticle" placeholder="Entrez le prix de l'article ..." type="text">
             </p>
 
-            <button class="w3-btn w3-margin-bottom w3-grey">Enregistrer</button>
+            <button class="w3-btn w3-margin-bottom w3-grey" type="submit">Enregistrer</button>
         </form>
     </div>
 
@@ -34,9 +34,9 @@
                 <th>Options</th>
             </tr>
             <tr>
-                <td>Jill</td>
-                <td>Smith</td>
-                <td>50</td>
+                <td><?= $article ?></td>
+                <td><?php $article->getPrix();?></td>
+                <td><?php $article->getCreatedAt();?></td>
                 <td><button><i class="fa fa-close"></i></button> <button><i class="fa fa-refresh"></i></button></td>
             </tr>
         </table>
