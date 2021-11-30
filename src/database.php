@@ -6,7 +6,7 @@ abstract class Database
 {
     const DB_HOST = 'mysql:host=localhost;dbname=projet-ecommerce-web;charset=utf8';
     const DB_USER = 'root';
-    const DB_PASSWORD = 'root';
+    const DB_PASSWORD = 'YES';
 
     private $connection;
 

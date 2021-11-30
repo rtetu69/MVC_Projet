@@ -2,7 +2,11 @@
 
 namespace App;
 
+<<<<<<< HEAD
 use App\controller\UserController;
+=======
+use App\controller\ArticleControllers;
+>>>>>>> bbf54cee4a703b69cedf57655814a68f64837a23
 
 class Router
 {
@@ -11,6 +15,7 @@ class Router
         $route = $_GET['route'] ?? null;
         $action = $_GET['action'] ?? null;
 
+<<<<<<< HEAD
         
             var_dump($route);
             var_dump($action);
@@ -36,5 +41,16 @@ class Router
             }
         
        
+=======
+        if(isset($_GET['action'])){
+            switch ($action):
+            case 'article':
+                return (new ArticleControllers())->readArticle(1);
+            endswitch;
+
+        }else{
+            require_once 'vue/accueil.php';
+        }
+>>>>>>> bbf54cee4a703b69cedf57655814a68f64837a23
     }
 }
