@@ -10,8 +10,7 @@
         private string $email;
         private string $mdp;
 
-        function __construct($id, $nom, $prenom, $email, $mdp){
-            $this->id = $id;
+        function __construct($nom, $prenom, $email, $mdp){
             $this->nom = $nom;
             $this->prenom = $prenom;
             $this->email = $email;

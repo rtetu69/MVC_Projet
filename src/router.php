@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\controller\UserController;
+
 class Router
 {
     public function run()
@@ -9,14 +11,30 @@ class Router
         $route = $_GET['route'] ?? null;
         $action = $_GET['action'] ?? null;
 
-        if(isset($_GET['action'])){
-            switch ($action):
-            case 'article':
-                require_once 'vue/articleView.php';
-            endswitch;
+        
+            var_dump($route);
+            var_dump($action);
+            if('userController'==$route && $action){
+                var_dump('test 2');
+                if('createUser' == $action){   
+                    var_dump('test 3');
+                    die;
+                    return (new UserController())->create();
+                    //require_once 'vue/connexion.php';
+                }
+            }
 
-        }else{
-            require_once 'vue/connexion.php';
-        }
+            if(isset($_GET['action'])){
+                switch ($action):
+                case 'article':
+                    require_once 'vue/articleView.php';
+                endswitch;
+            }
+
+            else{
+                require_once 'vue/inscription.php';
+            }
+        
+       
     }
 }
