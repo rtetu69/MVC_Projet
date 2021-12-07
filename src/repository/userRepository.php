@@ -5,23 +5,22 @@
 
 class UserRepository extends database{
 
-        public function create($user){
-            $db = new Database();
-            $connection = $db->getConnection();
+        public function create(array $userdata= []){
+            //$db = new Database();
+            //$connection = $db->getConnection();
+            
             var_dump('db connecter');
             //$sql ='INSERT INTO user(`nom`, `prenom`, `email`, `mdp`) Values(:nom, : prenom, :)'; 
             
-            $request = $connection->prepare('INSERT INTO user(`nom`, `prenom`, `email`, `mdp`) VALUES(:nom, :prenom, :email, :mdp)');
-        
-            $request->bindParam(':nom', $user['nom']);
-            $request->bindParam(':prenom', $user['prenom']);
-            $request->bindParam(':email', $user['email']);
-            $request->bindParam(':mdp', $user['mdp']);
-    
-            $result = $request->execute();
-            
-            return $result;
-        
+            $request ='INSERT INTO user(`nom`, `prenom`, `email`, `mdp`) VALUES(:nom, :prenom, :email, :mdp)';
+            $this->createQuery($request,[
+                    'nom'=> $userdata['nom'],
+                    'prenom'=> $userdata['prenom'],
+                    'email'=> $userdata['email'],
+                    'mdp'=> $userdata['mdp']
+                ]
+            );
+            var_dump('objet créer dans la base');
         }
 
         public function read($userEmail){
@@ -33,7 +32,6 @@ class UserRepository extends database{
         }
 
         public function delete($user){
-
             $sql ='INSERT INTO user(`nom`, `prenom`, `email`, `mdp`, Values()'; 
         }
 

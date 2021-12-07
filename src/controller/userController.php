@@ -1,16 +1,21 @@
 <?php
     namespace App\controller;
 
-use App\model\User;
+
 use App\repository\UserRepository;
 
 class userController{
 
-        function create(){
-            $user = new User($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['mdp']);
+    private $userRepository;
 
-            $userRepository = new userRepository();
-            $userRepository->create($user);
+    function __construct(){
+        $this->userRepository = new userRepository();
+
+    }
+        function create(){
+            if ('POST' === $_SERVER['REQUEST_METHOD']) {
+                $this->userRepository->create($_POST);
+            }
         }
 
         function GetUser(){

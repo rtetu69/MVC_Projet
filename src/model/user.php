@@ -4,11 +4,11 @@
     
     class User{
 
-        private int $id;
-        private string $nom;
-        private string $prenom;
-        private string $email;
-        private string $mdp;
+        private  $id;
+        private  $nom;
+        private  $prenom;
+        private  $email;
+        private  $mdp;
 
         function __construct($nom, $prenom, $email, $mdp){
             $this->nom = $nom;
