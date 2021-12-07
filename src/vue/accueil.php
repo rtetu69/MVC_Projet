@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <body class="w3-content" style="max-width:100%">
-
-    <!-- Sidebar/menu -->
+<!--
+    <!-- Sidebar/menu --
     <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
         <div class="w3-container w3-display-container w3-padding-16">
             <i onclick="w3_close()" class="fa fa-remove w3-hide-large w3-button w3-display-topright"></i>
@@ -36,6 +36,8 @@
         <a href="#footer" class="w3-bar-item w3-button w3-padding">Subscribe</a>
     </nav>
 
+-->
+
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:250px">
 
@@ -51,9 +53,28 @@
 
         <!-- Content -->
             <div class="w3-container w3-center w3-padding-32 w3-grey"> 
-                    <h1>Cliquer si vous souhaitez vous connecter :</h1>
-                    <button type="button" class="w3-button">Mon espace : <i class="fa fa-user"></i></button>
+                    <h1>si vous souhaitez vous connecter :</h1>
+                    <button type="button" class="w3-button">   Mon espace :  <i class="fa fa-user"></i></button>
             </div>
+
+        <!-- Content à supprimer  -->
+            <form class="w3-container"  action="index.php?route=userController&action=connectUser" method="POST">
+
+                <?= $msg ?> </br>
+
+                <label class="w3-text-blue" ><b>Email : </b></label>
+                <input class="w3-input w3-border w3-round" type="text" name="email" id="email">
+                
+                <label class="w3-text-blue" ><b>Mot de passe : </b></label>
+                <input class="w3-input w3-border w3-round" type="text" name="mdp" id="mdp">
+
+                <button class="w3-btn w3-blue" type="submit">Se connecter</button>
+
+            
+            </form>
+        
+
+        
 
         <!-- Footer -->
         <footer class="w3-padding-64 w3-light-grey w3-small w3-center" id="footer">

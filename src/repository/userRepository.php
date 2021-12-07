@@ -43,12 +43,13 @@ class UserRepository extends database{
         }
 
         function connexionUser($mail, $mdp, &$profil){
-           
-            //$sql="SELECT * FROM `user` WHERE Mail=:mail AND Mdp=:mdp";
-            
-            $request ='SELECT * FROM `user` WHERE email=:mail AND mdp=:mdp';
-            $resultat = $this->createQuery($request, ['mail'=>$mail, 'mdp'=>$mdp]);
+                       
+            $request ='SELECT * FROM `user` WHERE email=:email AND mdp=:mdp';
+            $resultat = $this->createQuery($request, ['email'=>$mail, 'mdp'=>$mdp]);
 
+            $profil = $this->buildUser($resultat->fetch());
+
+            var_dump($profil);
             if ($resultat->rowCount() > 0) { 
                 $profil = $resultat->fetch(); 
                 return true;
@@ -60,7 +61,5 @@ class UserRepository extends database{
         }
 
     }
-
-
 
 ?>

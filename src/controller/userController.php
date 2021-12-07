@@ -21,12 +21,12 @@ class userController{
         $this->vue->render('/user/espaceClient', ['nom'=>'sebbah', 'prenom'=>'karim']);
     }
 
-
+    
     function connectUser(){ 
 
         $userRepository = new userRepository();
 
-        $mail = isset($_POST['mail']) ? ($_POST['mail']) : '';
+        $mail = isset($_POST['email']) ? ($_POST['email']) : '';
         $mdp =  isset($_POST['mdp']) ? ($_POST['mdp']) : '';
         $msg = ' ';
         if (count($_POST) == 0)
@@ -35,6 +35,8 @@ class userController{
             $profil = array();
             if (!$userRepository->connexionUser($mail, $mdp, $profil)) {
                 $msg = "erreur de saisie, l'email ou le mot de passe est incorrecte";
+                var_dump('dans mail il y a :');
+                var_dump($mail);
                 $this->vue->render('/user/connexion', ['msg'=>$msg]);
             } else {
                 $_SESSION['profil'] = $profil;

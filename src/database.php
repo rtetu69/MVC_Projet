@@ -35,7 +35,6 @@ abstract class Database
     {
         if (empty($parameters)) {
             $result = $this->checkConnection()->query($sql);
-
             return $result;
         }
 
