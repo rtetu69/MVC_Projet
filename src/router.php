@@ -17,13 +17,20 @@ class Router
         
             var_dump($route);
             var_dump($action);
+
             if('userController'==$route && $action){
                 var_dump('test 2');
                 if('createUser' == $action){   
                     var_dump('test 3');
                     //die;
                     return (new UserController())->create();
-                    require_once 'vue/connexion.php';
+                  
+                }
+                if('connectUser' == $action){   
+                    var_dump('test 4');
+                    //die;
+                    return (new UserController())->connectUser();
+
                 }
             }
 
@@ -35,7 +42,7 @@ class Router
             }
 
             else{
-                require_once 'vue/inscription.php';
+                require_once 'vue/user/inscription.php';
             }
         
        

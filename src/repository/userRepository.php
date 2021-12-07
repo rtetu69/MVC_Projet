@@ -21,6 +21,7 @@ class UserRepository extends database{
                 ]
             );
             var_dump('objet créer dans la base');
+
         }
 
         public function read($userEmail){
@@ -31,8 +32,8 @@ class UserRepository extends database{
 
         }
 
-        public function delete($user){
-            $sql ='INSERT INTO user(`nom`, `prenom`, `email`, `mdp`, Values()'; 
+        public function delete($emailUser){
+            $sql ='DELETE FROM user WHERE email=:emailUser'; 
         }
 
         private function buildUser($tab){
@@ -41,22 +42,20 @@ class UserRepository extends database{
             return $user;
         }
 
-        function connexionUser($mail, $mdp){
-            $db = new Database();
-            $connection = $db->getConnection();
-            var_dump('db connecter');
-
+        function connexionUser($mail, $mdp, &$profil){
+           
             //$sql="SELECT * FROM `user` WHERE Mail=:mail AND Mdp=:mdp";
             
-            $request = $connection->prepare('SELECT * FROM `user` WHERE Mail=:mail AND Mdp=:mdp');
+            $request ='SELECT * FROM `user` WHERE email=:mail AND mdp=:mdp';
+            $resultat = $this->createQuery($request, ['mail'=>$mail, 'mdp'=>$mdp]);
+
+            if ($resultat->rowCount() > 0) { 
+                $profil = $resultat->fetch(); 
+                return true;
+            }
+            else {return false;} 
         
 
-            $request->bindParam(':email', $mail);
-            $request->bindParam(':mdp', $mdp);
-       
-            $result = $request->execute();
-
-            return $result;
 
         }
 
