@@ -22,3 +22,13 @@ Mon nom est <?= $nom, $prenom ?>
     <button class="w3-btn w3-blue" type="submit">Modifier</button>
             
  </form>
+
+ <h3> Supprimer mon compte : </h3>
+ <form class="w3-container" action="index.php?route=userController&action=delete" method="POST">
+
+    <label class="w3-text-blue"><b>Email : </b></label>
+    <input class="w3-input w3-border w3-round" type="text" name="email" id="email" value="<?= $email ?>" readonly>
+            
+    <button class="w3-btn w3-blue" type="submit">Supprimer</button>
+            
+ </form>

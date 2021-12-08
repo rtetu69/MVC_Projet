@@ -27,15 +27,21 @@ class Router
                   
                 }
                 if('connectUser' == $action){   
-                    var_dump('test 4');
+                    
                     //die;
                     return (new UserController())->connectUser();
 
                 }
                 if('update' == $action){   
-                    var_dump('test 4');
+                   
                     //die;
                     return (new UserController())->update();
+
+                }
+                if('delete' == $action){   
+                    var_dump('test 5');
+                    //die;
+                    return (new UserController())->delete();
 
                 }
             }

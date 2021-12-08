@@ -52,6 +52,16 @@ class userController{
         $this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);
     }
 
+    function delete(){
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            var_dump('deleting...');
+            $this->userRepository->delete($_POST);
+            var_dump('deleted sucess !');
+        }
+        $this->vue->render('/user/inscription');
+        var_dump('cest ça la page ? ');
+    }
+
 }
 
 ?>
