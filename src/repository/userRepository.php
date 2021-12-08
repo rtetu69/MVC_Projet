@@ -33,8 +33,23 @@ class UserRepository extends database{
         }
 
         public function delete($emailUser){
-            $sql ='DELETE FROM user WHERE email=:emailUser'; 
+            $sql ='DELETE FROM user WHERE email=:email'; 
+            $this->createQuery($sql, ['email'=>$emailUser]);
         }
+
+        public function update($userdata){
+            $sql ='UPDATE user SET nom =:nom, prenom =:prenom , email =:email, mdp =:mdp  WHERE id=:id'; 
+            $result = $this->createQuery($sql, [
+                'id'=>$userdata['id'],
+                'nom'=> $userdata['nom'],
+                'prenom'=> $userdata['prenom'],
+                'email'=> $userdata['email'],
+                'mdp'=> $userdata['mdp']
+            ]);
+
+            return $this->buildUser($result->fetch());
+        }
+
 
         private function buildUser($tab){
     
@@ -47,17 +62,11 @@ class UserRepository extends database{
             $request ='SELECT * FROM `user` WHERE email=:email AND mdp=:mdp';
             $resultat = $this->createQuery($request, ['email'=>$mail, 'mdp'=>$mdp]);
 
-            $profil = $this->buildUser($resultat->fetch());
-
-            var_dump($profil);
             if ($resultat->rowCount() > 0) { 
-                $profil = $resultat->fetch(); 
+                $profil = $this->buildUser($resultat->fetch());
                 return true;
             }
             else {return false;} 
-        
-
-
         }
 
     }

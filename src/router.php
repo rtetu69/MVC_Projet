@@ -32,6 +32,12 @@ class Router
                     return (new UserController())->connectUser();
 
                 }
+                if('update' == $action){   
+                    var_dump('test 4');
+                    //die;
+                    return (new UserController())->update();
+
+                }
             }
 
             if(isset($_GET['action'])){

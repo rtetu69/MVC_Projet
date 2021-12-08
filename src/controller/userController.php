@@ -18,10 +18,9 @@ class userController{
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
             $this->userRepository->create($_POST);
         }
-        $this->vue->render('/user/espaceClient', ['nom'=>'sebbah', 'prenom'=>'karim']);
+        $this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);
     }
 
-    
     function connectUser(){ 
 
         $userRepository = new userRepository();
@@ -40,10 +39,17 @@ class userController{
                 $this->vue->render('/user/connexion', ['msg'=>$msg]);
             } else {
                 $_SESSION['profil'] = $profil;
-                $this->vue->render('/user/espaceClient', ['nom'=>'sebbah', 'prenom'=>'karim']);
+                $this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);
                     
             }
         }
+    }
+
+    function update(){
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            $this->userRepository->update($_POST);
+        }
+        $this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);
     }
 
 }
