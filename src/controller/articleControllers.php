@@ -4,29 +4,40 @@ namespace App\controller;
 
 use App\model\Article;
 use App\repository\ArticleRepository;
+use App\vue\Vue;
 
 class ArticleControllers
 {
-    function readArticle(int $id){
-        var_dump('readArticle');
-        $articleRepo = new ArticleRepository();
-        $article = $articleRepo->read($id);
+    private ArticleRepository $articleRepository;
+    private Vue $vue;
 
-        require '../vue/articleView.php';
+    public function __construct(){
+        $this->articleRepository = new articleRepository();
+        $this->vue = new Vue();
     }
 
+    public function getView()
+    {
+        $article = $this->articleRepository->get(1);
+        $this->vue->render('./article/articleView', ['nom'=>$article->getNom(), 'prix'=>$article->getPrix(),  'createdAt'=>$article->getCreatedAt()]);
+    }
 
-
-
-    function createArticle(){
+    public function createArticle(){
         var_dump('createArticle');
+        
+        if('POST' === $_SERVER['REQUEST_METHOD'])
+        {
+            $article = $this->articleRepository->create($_POST);
+        }
 
-        $article = new Article($_POST['nom'], $_POST['prix']);
+        $article = $this->articleRepository->get(1);
+        $this->vue->render('/article/articleView', ['nom'=>$article->getNom(), 'prix'=>$article->getPrix(),  'createdAt'=>$article->getCreatedAt()]);
+    }
 
-        $articleRepo = new ArticleRepository();
-        $articleRepo->create($article);
-
-        //on appelle notre vue
-        require '../vue/articleView.php';
+    public function readArticle(int $id)
+    {
+        $this->vue->render('./article/articleView', [
+            'nom' => $this->articleRepository->getAllArticles($id),
+        ]);
     }
 }

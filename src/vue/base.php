@@ -50,8 +50,7 @@
             </p>
         </header>
 
-        <!-- Content : c'est ici qu'on vas charger nos page avec le fileRender() -->
-
+        <!-- Content -->
         <div class="container">
             <?=  $content ?>
         </div>

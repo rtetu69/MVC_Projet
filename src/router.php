@@ -2,7 +2,6 @@
 
 namespace App;
 
-
 use App\controller\UserController;
 use App\controller\ArticleControllers;
 
@@ -14,56 +13,46 @@ class Router
         $route = $_GET['route'] ?? null;
         $action = $_GET['action'] ?? null;
 
-        
-            var_dump($route);
-            var_dump($action);
+        var_dump($route);
+        var_dump($action);
 
-            if('userController'==$route && $action){
+        if(isset($_GET['route'])){
+            if ('userController' == $route && $action) {
                 var_dump('test 2');
-                if('createUser' == $action){   
+                if ('createUser' == $action) {
                     var_dump('test 3');
                     //die;
                     return (new UserController())->create();
-                  
                 }
-                if('connectUser' == $action){   
-                    
+                if ('connectUser' == $action) {
+                    var_dump('test 4');
                     //die;
                     return (new UserController())->connectUser();
-
                 }
-                if('update' == $action){   
-                   
+                if ('update' == $action) {
+                    var_dump('test 4');
                     //die;
                     return (new UserController())->update();
-
-                }
-                if('delete' == $action){   
-                    var_dump('test 5');
-                    //die;
-                    return (new UserController())->delete();
-
                 }
             }
+        }else{
+            require_once 'vue/accueil.php';
+        }
 
-            if(isset($_GET['action'])){
-                switch ($action):
-                case 'article':
-                    require_once 'vue/articleView.php';
-                endswitch;
+        if (isset($_GET['route'])) {
+            if ('articleControllers' === $route && $action) {
+                $articleController = new ArticleControllers();
+
+                if ('createArticle' === $action) {
+                    return $articleController->createArticle();
+                } elseif ('read' === $action && isset($_GET['id'])) {
+                    return $articleController->readArticle($_GET['id']);
+                }elseif ('getView' === $action) {
+                    return $articleController->getView();
+                }/* elseif ('update' === $action && isset($_GET['id'])) {
+                    return $articleController->update($_GET['id']);
+                }*/
             }
-
-            else{
-                require_once 'vue/user/inscription.php';
-            }
-        
-       
-        if(isset($_GET['action'])){
-            switch ($action):
-            case 'article':
-                return (new ArticleControllers())->readArticle(1);
-            endswitch;
-
         }else{
             require_once 'vue/accueil.php';
         }

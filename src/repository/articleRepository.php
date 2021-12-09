@@ -3,7 +3,7 @@
 namespace App\repository;
 
 use App\Database;
-use App\model\Article;
+use App\model\Article as ModelArticle;
 use DateTime;
 
 date_default_timezone_set("Europe/Paris");
@@ -11,52 +11,40 @@ date_default_timezone_set("Europe/Paris");
 class ArticleRepository extends database
 {
 
-    public function create($article){
-        $db = new Database();
-        $connection = $db->getConnection();
-        $date = new DateTime();
+    public function create(array $articledata= []){
+        $request = 'INSERT INTO articles(nom, prix, createdAt) VALUES(:nom, :prix, :createdAt)';
 
-        $request = $connection->prepare('INSERT INTO articles(nom, prix, createdAt) VALUES(:nom, :prix, :createdAt)');
+        $this->createQuery($request,[
+                'nom'=> $articledata['nom'],
+                'prix'=> $articledata['prix'],
+                'createdAt'=> (new \DateTime())->format('Y-m-d H:i:s')
+            ]
+        );
+    }
+
+    public function getAllArticles(){
+        $result = $this->createQuery('SELECT * FROM articles');
+        var_dump($result->fetchAll());
+        return $this->buildObject($result->fetchAll());
+    }
+
+    public function get(int $id)
+    {
+        $result = $this->createQuery(
+            'SELECT * FROM  articles WHERE id = :id',
+            ['id' => $id]
+        );
         
-        $request->bindParam(':nom', $article['nomArticle']);
-        $request->bindParam(':prix', $article['prixArticle']);
-        $request->bindParam(':createdAt', $date);
-
-        $result = $request->execute();
-        
-        return $result;
+        return $this->buildObject($result->fetch());
     }
 
-    public function read(int $id){
-        $this->getArticle($id);
-    }
+    private function buildObject(array $row): ModelArticle
+    {
+        $article = new ModelArticle();
+        $article->setNom($row['nom']);
+        $article->setPrix($row['prix']);
+        $article->setCreatedAt(new \DateTime($row['createdAt']));
 
-
-
-    public function getArticle($articleId){
-        $sql = 'SELECT * FROM articles WHERE id =:articleId';
-
-        $result = $this->createQuery($sql, ['articleId' => $articleId]);
-
-        return $this->buildObject($result);
-    }
-
-
-
-
-    public static function getArticles(){
-        $db = new Database();
-        $connection = $db->getConnection();
-        $sql ="SELECT * FROM articles";
-        $result = $connection->query($sql);
-
-        return $result;
-    }
-
-    private function buildObject($tab){
-
-        $createdAt = new DateTime($tab['createdAt']);
-
-        $article = new Article($tab['articleId'], $tab['nom'], $tab['prix'], $createdAt);
+        return $article;
     }
 }
