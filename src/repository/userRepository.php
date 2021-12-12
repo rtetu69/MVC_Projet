@@ -28,6 +28,15 @@ class UserRepository extends database{
             return $user;
 
         }
+        public function getId($userEmail){
+            $sql ='SELECT id FROM `user` WHERE `email` =:email' ;
+            $result = $this->createQuery($sql, ['email'=>$userEmail]);
+            //On recupere ce qu'on a dans notre select pour en créer un objet User avec buildUser
+            $IdUser =$result->fetch();
+     
+            return $IdUser;
+
+        }
 
         public function delete($userEmail){
             //je crée ma requete
@@ -37,16 +46,17 @@ class UserRepository extends database{
         }
 
         public function update($userdata){
-            //Je crée ma requete 
-            $sql ='UPDATE user SET nom =:nom, prenom =:prenom , email =:email, mdp =:mdp  WHERE id=:id'; 
-            //J'execute ma requete en donnant mes params a bind
 
+            //Je crée ma requete 
+            $sql ='UPDATE user SET nom =:nom, prenom =:prenom, mdp =:mdp   WHERE email =:email'; 
+            //J'execute ma requete en donnant mes params a bind
+            var_dump('dans nom il y a :');
+            var_dump($userdata->getNom());
             $this->createQuery($sql, [
                 'nom'=> $userdata->getNom(),
                 'prenom'=> $userdata->getPrenom(),
                 'email'=> $userdata->getEmail(),
-                'mdp'=> $userdata->getMdp(),
-                'id'=>$userdata->getId()
+                'mdp'=> $userdata->getMdp()
             ]);
         }
 
@@ -56,6 +66,17 @@ class UserRepository extends database{
             $user = new User();
 
             $user->setId($tab['id']);
+            $user->setNom($tab['nom']);
+            $user->setPrenom($tab['prenom']);
+            $user->setEmail($tab['email']);
+            $user->setMdp($tab['mdp']);
+
+            return $user;
+        }
+        public function buildUserFotUpdate($tab){
+            //Appelle du constructeur de User en entrant les param qu'on vas recuperer depuis le $_Post donner en param de la fonction
+            $user = new User();
+
             $user->setNom($tab['nom']);
             $user->setPrenom($tab['prenom']);
             $user->setEmail($tab['email']);

@@ -45,30 +45,28 @@ class userController{
                 $_SESSION['mdp'] = $profil->getMdp();
                 
                 $this->vue->render('/user/espaceClient', ['nom'=>$_SESSION['nom'], 'prenom'=>$_SESSION['prenom'], 'email'=>$_SESSION['email'], 'mdp'=>$_SESSION['mdp']]);
-                    
-                //$_SESSION['profil'] = $profil;
-                //$this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);      
             }
         }
     }
 
     function update(){
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
-            $user = $this->userRepository->read($_POST);
+            //$idUser = $this->userRepository->getId($_POST['email']);
+            $user = $this->userRepository->buildUserFotUpdate($_POST);
+            var_dump($_POST);     
             $this->userRepository->update($user);
+            $user2 = $this->userRepository->read($_POST);
+            
         }
-        $this->vue->render('/user/espaceClient', ['nom'=>$user->getNom(),'prenom'=>$user->getPrenom(), 'email'=>$user->getEmail(), 'mdp'=>$user->getMdp()]);
+        $this->vue->render('/user/espaceClient', ['nom'=>$user2->getNom(),'prenom'=>$user2->getPrenom(), 'email'=>$user2->getEmail(), 'mdp'=>$user2->getMdp()]);
         //$this->vue->render('/user/espaceClient', ['id'=>$_SESSION['id'] ,'nom'=>$_SESSION['nom'], 'prenom'=>$_SESSION['prenom'], 'email'=>$_SESSION['email'], 'mdp'=>$_SESSION['mdp']]);
     }
 
     function delete(){
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
-            var_dump('deleting...');
             $this->userRepository->delete($_POST);
-            var_dump('deleted sucess !');
         }
         $this->vue->render('/user/inscription');
-        var_dump('cest ça la page ? ');
     }
 
     function read(){
@@ -78,9 +76,7 @@ class userController{
             var_dump('reading sucess !');
         }
         $this->vue->render('/user/informationClient', ['nom'=>$user->getNom(),'prenom'=>$user->getPrenom(), 'email'=>$user->getEmail(), 'mdp'=>$user->getMdp()]);
-        var_dump('cest ça la page ? ');
     }
-
 
 }
 

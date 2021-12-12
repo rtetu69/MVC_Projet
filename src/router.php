@@ -13,9 +13,6 @@ class Router
         $route = $_GET['route'] ?? null;
         $action = $_GET['action'] ?? null;
 
-        var_dump($route);
-        var_dump($action);
-
         if('userController'==$route && $action){
             if(isset($_GET['route'])){
                 if ('userController' == $route && $action) {

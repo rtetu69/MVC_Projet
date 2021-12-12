@@ -14,7 +14,7 @@ Bonjour <?= $nom ?> <?= $prenom ?> !
     <input class="w3-input w3-border w3-round" type="text" name="prenom" id="prenom" value="<?= $prenom ?> ">
 
     <label class="w3-text-blue"><b>Email : </b></label>
-    <input class="w3-input w3-border w3-round" type="text" name="email" id="email" value="<?= $email ?> ">
+    <input class="w3-input w3-border w3-round" type="text" name="email" id="email" value="<?= $email ?> " readonly>
 
     <label class="w3-text-blue"><b>Mot de passe : </b></label>
     <input class="w3-input w3-border w3-round" type="text" name="mdp" id="mdp" value="<?= $mdp ?>">
@@ -22,17 +22,9 @@ Bonjour <?= $nom ?> <?= $prenom ?> !
     <button class="w3-btn w3-blue" type="submit">Modifier</button>
 </form>
 
-<h3> Supprimer mon compte : </h3>
 
-<form class="w3-container" action="index.php?route=userController&action=delete" method="POST">
-
-    <label class="w3-text-blue"><b>Email : </b></label>
-    <input class="w3-input w3-border w3-round" type="text" name="email" id="email" value="<?= $email ?>" readonly>
-            
-    <button class="w3-btn w3-blue" type="submit">Supprimer</button>
-            
- </form>
-
+<!-- lE READ fONCTIONNE MAIS EST INUTILE (decommenter cette partie pour la tester )
+-->
  <h3> Afficher mes informations : </h3>
  <form class="w3-container" action="index.php?route=userController&action=read" method="POST">
 
@@ -40,6 +32,18 @@ Bonjour <?= $nom ?> <?= $prenom ?> !
     <input class="w3-input w3-border w3-round" type="text" name="email" id="email" value="<?= $email ?>" readonly>
             
     <button class="w3-btn w3-blue" type="submit">Afficher</button>
+            
+ </form>
+
+
+ <h3> Supprimer mon compte : </h3>
+
+<form class="w3-container" action="index.php?route=userController&action=delete" method="POST">
+
+    <label class="w3-text-blue"><b>Email : </b></label>
+    <input class="w3-input w3-border w3-round" type="text" name="email" id="email" value="<?= $email ?>" readonly>
+            
+    <button class="w3-btn w3-blue" type="submit">Supprimer</button>
             
  </form>
 

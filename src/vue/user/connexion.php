@@ -1,4 +1,4 @@
-
+<?php $msg = ' '; ?>
         <!-- Content -->
         
             <form class="w3-container"  action="index.php?route=userController&action=connectUser" method="POST">
