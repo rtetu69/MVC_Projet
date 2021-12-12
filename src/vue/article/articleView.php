@@ -1,6 +1,6 @@
 <?php
-    use App\model\Article;
-    use App\repository\ArticleRepository;
+
+use App\repository\ArticleRepository;
 ?>
 
 <!DOCTYPE html>
@@ -28,32 +28,41 @@
             <button class="w3-btn w3-margin-bottom w3-grey" type="submit">Enregistrer</button>
         </form>
     </div>
-    
+
     <div class="w3-container w3-margin">
         <table class="w3-table-all w3-card-4 w3-striped w3-bordered w3-border w3-centered  w3-hoverable">
             <tr class="w3-grey">
                 <th>Nom de l'article</th>
                 <th>Prix de l'article</th>
                 <th>Date de mise en ligne</th>
-                <th>Options</th>
             </tr>
 
             <?php
-            $article = new Article();
             $articleRepository = new ArticleRepository();
+            $articles = $articleRepository->get(2);
 
-            $articles = $articleRepository->getAllArticles();
+            /* $articles = $articleRepository->getAllArticles();
 
-            foreach ($articles as $article) {
+            foreach ($articles as $article) {*/
             ?>
             <tr>
-                <td><?= $articles->getNom() ?></td>
-                <td><?= $articles->getPrix() ?></td>
-                <td><?= $articles->getCreatedAt()->format('Y-m-d H:i:s') ?></td>
-                <td><button><i class="fa fa-close"></i></button> <button><i class="fa fa-refresh"></i></button></td>
+                <form action="index.php?route=articleControllers&action=updateArticle" method="POST">
+                    <td><input class="w3-input w3-border w3-round" type="text" name="nom" id="nom" value="<?= $articles->getNom() ?>"></td>
+                    <td><input class="w3-input w3-border w3-round" type="text" name="prix" id="prix" value="<?= $articles->getPrix() ?>"></td>
+                    <td><input class="w3-input w3-border w3-round" type="text" name="createdAt" id="createdAt" value="<?= $articles->getCreatedAt()->format('Y-m-d H:i:s') ?>"></td>
+                    <td><button type="submit"><i class="fa fa-refresh"></i></button></td>
+                </form>
+            </tr>
+            <tr>
+                <td>
+                    <form action="index.php?route=articleControllers&action=deleteArticle" method="POST">
+                        <input class="w3-input w3-border w3-round" type="text" name="nom" id="nom"  value="<?= $articles->getNom() ?>" placeholder="nom a supprimer">
+                    <td><button type="submit"><i class="fa fa-close"></i></button></td>
+                    </form>
+                </td>
             </tr>
             <?php
-            }
+            //}
             ?>
         </table>
     </div>

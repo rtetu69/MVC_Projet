@@ -2,7 +2,6 @@
 
 namespace App\controller;
 
-use App\model\Article;
 use App\repository\ArticleRepository;
 use App\vue\Vue;
 
@@ -18,7 +17,7 @@ class ArticleControllers
 
     public function getView()
     {
-        $article = $this->articleRepository->get(1);
+        $article = $this->articleRepository->get(2);
         $this->vue->render('./article/articleView', ['nom'=>$article->getNom(), 'prix'=>$article->getPrix(),  'createdAt'=>$article->getCreatedAt()]);
     }
 
@@ -27,17 +26,34 @@ class ArticleControllers
         
         if('POST' === $_SERVER['REQUEST_METHOD'])
         {
-            $article = $this->articleRepository->create($_POST);
+           $this->articleRepository->create($_POST);
         }
 
-        $article = $this->articleRepository->get(1);
-        $this->vue->render('/article/articleView', ['nom'=>$article->getNom(), 'prix'=>$article->getPrix(),  'createdAt'=>$article->getCreatedAt()]);
+        $this->vue->render('./article/articleView', ['nom'=>$_POST['nom'], 'prix'=>$_POST['prix']]);
     }
 
-    public function readArticle(int $id)
+    public function readArticle($id)
     {
         $this->vue->render('./article/articleView', [
-            'nom' => $this->articleRepository->getAllArticles($id),
+            $this->articleRepository->getAllArticles($id),
         ]);
+    }
+
+    public function deleteArticle(){
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            $this->articleRepository->delete($_POST);
+        }
+        $this->vue->render('./article/articleView');
+    }
+
+    public function updateArticle(){
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            $article = $this->articleRepository->buildArticleForUpdate($_POST);
+            var_dump($_POST);
+            $this->articleRepository->updateArticle($article);
+            $articles = $this->articleRepository->get($_POST);
+            
+        }
+        $this->vue->render('./article/articleView', ['nom'=>$articles->getNom(),'prix'=>$articles->getPrix(), 'createdAt'=>$articles->getCreatedAt()]);
     }
 }
