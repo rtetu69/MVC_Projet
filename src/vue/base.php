@@ -1,3 +1,8 @@
+<?php
+    //On démarre une nouvelle session
+    session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <title>MiniProjet - Karim & Romain</title>

@@ -19,29 +19,30 @@ class Router
             var_dump($action);
 
             if('userController'==$route && $action){
-                var_dump('test 2');
+
                 if('createUser' == $action){   
-                    var_dump('test 3');
-                    //die;
+
                     return (new UserController())->create();
                   
                 }
                 if('connectUser' == $action){   
-                    
-                    //die;
+
                     return (new UserController())->connectUser();
 
                 }
                 if('update' == $action){   
-                   
-                    //die;
+
                     return (new UserController())->update();
 
                 }
                 if('delete' == $action){   
-                    var_dump('test 5');
-                    //die;
+
                     return (new UserController())->delete();
+
+                }
+                if('read' == $action){   
+
+                    return (new UserController())->read();
 
                 }
             }

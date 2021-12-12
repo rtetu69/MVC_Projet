@@ -31,15 +31,20 @@ class userController{
         if (count($_POST) == 0)
         $this->vue->render('/user/connexion', ['msg'=>$msg]);
         else {
-            $profil = array();
+           
             if (!$userRepository->connexionUser($mail, $mdp, $profil)) {
                 $msg = "erreur de saisie, l'email ou le mot de passe est incorrecte";
                 var_dump('dans mail il y a :');
                 var_dump($mail);
                 $this->vue->render('/user/connexion', ['msg'=>$msg]);
             } else {
-                $_SESSION['profil'] = $profil;
-                $this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);
+                $_SESSION['id'] = $profil->getId();
+                $_SESSION['nom'] = $profil->getNom();
+                $_SESSION['prenom'] = $profil->getPrenom();
+                $_SESSION['email'] = $profil->getEmail();
+                $_SESSION['mdp'] = $profil->getMdp();
+                
+                $this->vue->render('/user/espaceClient', ['nom'=>$_SESSION['nom'], 'prenom'=>$_SESSION['prenom'], 'email'=>$_SESSION['email'], 'mdp'=>$_SESSION['mdp']]);
                     
             }
         }
@@ -47,9 +52,11 @@ class userController{
 
     function update(){
         if ('POST' === $_SERVER['REQUEST_METHOD']) {
-            $this->userRepository->update($_POST);
+            $user = $this->userRepository->read($_POST);
+            $this->userRepository->update($user);
         }
-        $this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);
+        $this->vue->render('/user/espaceClient', ['nom'=>$user->getNom(),'prenom'=>$user->getPrenom(), 'email'=>$user->getEmail(), 'mdp'=>$user->getMdp()]);
+        //$this->vue->render('/user/espaceClient', ['id'=>$_SESSION['id'] ,'nom'=>$_SESSION['nom'], 'prenom'=>$_SESSION['prenom'], 'email'=>$_SESSION['email'], 'mdp'=>$_SESSION['mdp']]);
     }
 
     function delete(){
@@ -59,6 +66,16 @@ class userController{
             var_dump('deleted sucess !');
         }
         $this->vue->render('/user/inscription');
+        var_dump('cest ça la page ? ');
+    }
+
+    function read(){
+        if ('POST' === $_SERVER['REQUEST_METHOD']) {
+            var_dump('reading...');
+            $user = $this->userRepository->read($_POST);
+            var_dump('reading sucess !');
+        }
+        $this->vue->render('/user/informationClient', ['nom'=>$user->getNom(),'prenom'=>$user->getPrenom(), 'email'=>$user->getEmail(), 'mdp'=>$user->getMdp()]);
         var_dump('cest ça la page ? ');
     }
 

@@ -41,6 +41,8 @@ abstract class Database
         $result = $this->checkConnection()->prepare($sql);
         $result->execute($parameters);
 
+
+
         return $result;
     }
 

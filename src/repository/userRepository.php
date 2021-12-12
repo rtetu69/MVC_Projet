@@ -20,39 +20,50 @@ class UserRepository extends database{
         }
 
         public function read($userEmail){
-
-            $result = $this->createQuery('SELECT * INTO user WHERE email= :userEmail', ['userEmail'=>$userEmail]);
-            //Onn recupere ce qu'on a dans notre select pour en créer un objet User avec buildUser
-            return $this->buildUser($result->fetch());
+            $sql ='SELECT * FROM `user` WHERE `email` =:email';
+            $result = $this->createQuery($sql, ['email'=>$userEmail['email']]);
+            //On recupere ce qu'on a dans notre select pour en créer un objet User avec buildUser
+            $user = $this->buildUser($result->fetch());
+     
+            return $user;
 
         }
 
-        public function delete($emailUser){
+        public function delete($userEmail){
             //je crée ma requete
             $sql ='DELETE FROM user WHERE email=:email'; 
             //J'execute ma requete en donnant mon param a bind
-            $this->createQuery($sql, ['email'=>$emailUser['email']]);
+            $this->createQuery($sql, ['email'=>$userEmail['email']]);
         }
 
         public function update($userdata){
             //Je crée ma requete 
             $sql ='UPDATE user SET nom =:nom, prenom =:prenom , email =:email, mdp =:mdp  WHERE id=:id'; 
             //J'execute ma requete en donnant mes params a bind
-            $result = $this->createQuery($sql, [
-                'id'=>$userdata['id'],
-                'nom'=> $userdata['nom'],
-                'prenom'=> $userdata['prenom'],
-                'email'=> $userdata['email'],
-                'mdp'=> $userdata['mdp']
+            var_dump('je vardump lobj :');
+            var_dump($userdata->getPrenom());
+            var_dump($userdata->getEmail());
+
+            $this->createQuery($sql, [
+                'nom'=> $userdata->getNom(),
+                'prenom'=> $userdata->getPrenom(),
+                'email'=> $userdata->getEmail(),
+                'mdp'=> $userdata->getMdp(),
+                'id'=>$userdata->getId()
             ]);
-            //Je créer mon nouvel objet
-            return $this->buildUser($result->fetch());
         }
 
 
         private function buildUser($tab){
             //Appelle du constructeur de User en entrant les param qu'on vas recuperer depuis le $_Post donner en param de la fonction
-            $user = new User($tab['userId'], $tab['nom'], $tab['prenom'], $tab['email'], $tab['mdp']);
+            $user = new User();
+
+            $user->setId($tab['id']);
+            $user->setNom($tab['nom']);
+            $user->setPrenom($tab['prenom']);
+            $user->setEmail($tab['email']);
+            $user->setMdp($tab['mdp']);
+
             return $user;
         }
 
@@ -65,6 +76,7 @@ class UserRepository extends database{
             if ($resultat->rowCount() > 0) { 
                 //On recupere les informations de la ligne et on crée notre objet User
                 $profil = $this->buildUser($resultat->fetch());
+
                 //et on retourne true pour indiquer que c'est bien une combinaison valide
                 return true;
             }
