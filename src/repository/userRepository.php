@@ -40,9 +40,6 @@ class UserRepository extends database{
             //Je crée ma requete 
             $sql ='UPDATE user SET nom =:nom, prenom =:prenom , email =:email, mdp =:mdp  WHERE id=:id'; 
             //J'execute ma requete en donnant mes params a bind
-            var_dump('je vardump lobj :');
-            var_dump($userdata->getPrenom());
-            var_dump($userdata->getEmail());
 
             $this->createQuery($sql, [
                 'nom'=> $userdata->getNom(),

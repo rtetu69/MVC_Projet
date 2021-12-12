@@ -46,6 +46,8 @@ class userController{
                 
                 $this->vue->render('/user/espaceClient', ['nom'=>$_SESSION['nom'], 'prenom'=>$_SESSION['prenom'], 'email'=>$_SESSION['email'], 'mdp'=>$_SESSION['mdp']]);
                     
+                //$_SESSION['profil'] = $profil;
+                //$this->vue->render('/user/espaceClient', ['nom'=>$_POST['nom'], 'prenom'=>$_POST['prenom'], 'email'=>$_POST['email'], 'mdp'=>$_POST['mdp']]);      
             }
         }
     }
@@ -78,6 +80,7 @@ class userController{
         $this->vue->render('/user/informationClient', ['nom'=>$user->getNom(),'prenom'=>$user->getPrenom(), 'email'=>$user->getEmail(), 'mdp'=>$user->getMdp()]);
         var_dump('cest ça la page ? ');
     }
+
 
 }
 

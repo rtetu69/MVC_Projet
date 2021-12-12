@@ -4,40 +4,41 @@ namespace App\model;
 
 class Article
 {
-    private String $nom;
-    private String $prix;
+    private $nom;
+    private $prix;
     private \DateTime $createdAt;
-
-
-    function _construct($nom, $prix, $auteurId, $createdAt)
-    {
-        $this->nom = $nom;
-        $this->prix = $prix;
-        $this->createdAt = $createdAt;
-    }
 
     public function getNom(): string
     {
         return $this->nom;
     }
 
-    public function getPrix(): string
+    public function setNom($nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrix(): int
     {
         return $this->prix;
     }
 
-    public function getCreatedAt(): \DateTime
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+    }
+
+    public function getCreatedAt()
     {
         return $this->createdAt;
     }
 
-    public function setTitre(string $value)
+    public function setCreatedAt($createdAt)
     {
-        $this->titre = $value;
-    }
+        $this->createdAt = $createdAt;
 
-    public function setPrix(string $value)
-    {
-        $this->prix = $value;
+        return $this;
     }
 }
