@@ -11,7 +11,7 @@ class ArticleControllers
     private Vue $vue;
 
     public function __construct(){
-        $this->articleRepository = new articleRepository();
+        $this->articleRepository = new ArticleRepository();
         $this->vue = new Vue();
     }
 

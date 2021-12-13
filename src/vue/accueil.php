@@ -54,13 +54,14 @@
         <!-- Content -->
         <div class="w3-container w3-center w3-padding-32 w3-grey">
             <h1>si vous souhaitez vous connecter :</h1>
-            <a>
-            <button type="button" class="w3-button"> Mon espace : <i class="fa fa-user"></i></button>
-            </a>
+            <?php require("user/connexion.php"); ?>
         </div>
 
-       
+        <h4> Pour s'inscrire c'est ici : </h4>
+            <?php require("user/inscription.php"); ?>
 
+       
+            <h4> Pour accéder à notre liste d'articles c'est ici : </h4>
         <form class="w3-container" action="index.php?route=articleControllers&action=getView" method="POST">
             <button type="submit">Articles</button>
         </form>

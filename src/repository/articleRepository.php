@@ -30,7 +30,7 @@ class ArticleRepository extends database
     public function get($id)
     {
         $result = $this->createQuery(
-            'SELECT * FROM  articles WHERE id =:id',
+            'SELECT * FROM  articles WHERE id=:id',
             ['id' => $id]
         );
         
